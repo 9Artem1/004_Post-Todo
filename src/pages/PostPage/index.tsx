@@ -6,22 +6,28 @@ import { PostComponent } from "../../components/simple/PostComponent";
 import { useAppDispatch } from "../../core/store";
 
 
-
-
-
 const PostsPage = () => {
   const dispatch = useAppDispatch()
 
-  const {post} = useSelector(selectPost)
+  const { post, status, error } = useSelector(selectPost)
 
   useEffect(() => {
     dispatch(fetchPostsThunk())
-  }, [])
+  }, [dispatch])
+
+  if (status === 'loading') {
+    return <div>Loading...</div>;
+  }
+
+  if (status === 'failed') {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <Wrapper>
-      <PostComponent post={{id: -1, userId: -1, title: 'Наименование поста', body: 'Далеко-далеко за словесными горами в стране гласных и согласных живут рыбные тексты. Толку однажды языком инициал. Себя которое буквенных страна его, это, дорогу подзаголовок деревни буквоград маленькая реторический алфавит ведущими, по всей бросил домах запятых. По всей текстов, переписали дороге пор агентство вскоре необходимыми вершину! Наш необходимыми однажды семантика решила имени взгляд букв раз. орический алфавит ведущими.'}}/>
-      {post && <PostComponent post={post} />}
+      {post && post.map((singlePost) => (
+        <PostComponent key={singlePost.id} post={singlePost} />
+      ))}
     </Wrapper>
   )
 }

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Checkbox, TextField } from "@mui/material";
 import { completeTask, editTask, deleteTask } from "../../../core/store/taskSlice";
 import { useDispatch } from "react-redux";
-import { TodoStyle, TodoStyleButton, TodoTitle, TodoTitleEdit } from "../../ui/todoStyled";
+import { TodoStyleButton, TodoTitle, TodoTitleEdit } from "../../ui/todoStyled";
 import { Task } from '../../../core/types/task';
 import { NavLink } from "react-router-dom";
 
@@ -39,7 +39,7 @@ export const TaskComponent: React.FC<Props> = ({ id, task }) => {
 
   return (
     <>
-          <TodoStyle>
+
         <Checkbox
           checked={task.completed}
           size="medium"
@@ -69,10 +69,10 @@ export const TaskComponent: React.FC<Props> = ({ id, task }) => {
         ) : (
           <TodoTitle checked={task.completed}>{task.text}</TodoTitle>
         )}
-      </TodoStyle>
+
       <TodoStyleButton>
-      <NavLink to="/TaskDetails"> <Button variant="contained">Подробнее</Button></NavLink>
-        <Button variant="contained" fullWidth onClick={() =>
+      <NavLink to={`/TodoPage/${task.id}`} > <Button key={task.id} variant="contained"  size="large">Подробнее</Button></NavLink>
+        <Button variant="contained" size="large"  onClick={() =>
           editingInput !== id ?
             (setEditingInput(id), setEditingInputTitle(task.text)) :
             (dispatch(editTask(
@@ -87,7 +87,7 @@ export const TaskComponent: React.FC<Props> = ({ id, task }) => {
         }>
           {editingInput === id ? "Сохранить изменения" : "Редактировать задачу"}
         </Button>
-        <Button variant="contained" fullWidth onClick={() => dispatch(deleteTask(id))}>
+        <Button variant="contained" size="large"  onClick={() => dispatch(deleteTask(id))}>
           Удалить задачу
         </Button>
       </TodoStyleButton>

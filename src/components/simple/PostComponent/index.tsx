@@ -19,7 +19,9 @@ export const PostComponent: FC<{post: Post}> = ({post}) => {
     <Typography variant="body1">
       {post.body}
     </Typography>
-    <NavLink to="/PostDetailsPage"> <Button variant="contained">Подробнее</Button></NavLink>
+    <NavLink to={`/PostDetailsPage/${post.id}`} >
+       <Button key={post.id} variant="contained"  size="large">Подробнее</Button>
+    </NavLink>
   </PostStyle>
 
 }

@@ -15,13 +15,9 @@ const TodoPage: React.FC = () => {
     const [textNewTask, setTextNewTask] = useState<string>('');
     const tasks = useSelector(selectTask);
 
-    const addTaskId = (task: Omit<Task, "id">) => {
-        dispatch(addTask({ ...task, id: uuidv4() }));
-      }; 
-
     const handleAddTask = () => {
         if (textNewTask !== "") {
-          addTaskId({ text: textNewTask, completed: false });
+            dispatch(addTask({ text: textNewTask, completed: false }));
           setTextNewTask("");
         } else alert ("Введите текст задачи")
       };

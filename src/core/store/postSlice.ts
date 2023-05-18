@@ -1,45 +1,96 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import type { PayloadAction } from '@reduxjs/toolkit'
+import { SerializedError, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '.'
 import { Post } from '../types/post';
-import axiosAPI from '../axios';
-import axios from 'axios';
 
-interface CreatePostSlice { 
-    post: Post | null;
-}
 
-const initialState: CreatePostSlice = {
-    post: null,
-}
+enum PostStatus {
+    IDLE = 'idle',
+    LOADING = 'loading',
+    SUCCEEDED = 'succeeded',
+    FAILED = 'failed'
+  }
 
-export const fetchPostsThunk = createAsyncThunk('post/fetchPostsThunk', async (_, {rejectWithValue}) => {
-    try {
-        const { data } = await axios.get('https://jsonplaceholder.typicode.com/posts')
-        console.log(data)
-    } catch {
+  interface CreatePostSlice {
+    post: Post[];
+    status: PostStatus;
+    error: string | null;
+  }
+  
+  const initialState: CreatePostSlice = {
+    post: [],
+    status: PostStatus.IDLE,
+    error: null,
+  };
 
+export const fetchPostsThunk = createAsyncThunk<Post[],void,{ rejectValue: string }>(
+    "post/fetchPostsThunk", async (_, { rejectWithValue }) => {
+  try {
+    const response = await fetch(
+      "https://jsonplaceholder.typicode.com/posts?_limit=10"
+    );
+    if (!response.ok) {
+      throw new Error("Server Error!");
     }
-})
+    const data = await response.json();
+    console.log(data);
+    return data;
+  } catch (error:any) {
+    return rejectWithValue(error.message);
+  }
+});
+
+export const fetchPostById = createAsyncThunk<Post, number, { rejectValue: string }>(
+  'post/fetchPostById',
+  async (postId, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${postId}`);
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const data = await response.json();
+      return data;
+    } catch (error:any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 const postSlice = createSlice({
-    name: 'createPost',
+    name: "createPost",
     initialState,
     reducers: {
-        setPost: (state, action: PayloadAction<Pick<Post, 'title' | 'body'>>) => {
+      setPost(state, action) {
+        state.post = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(fetchPostsThunk.pending, (state) => {
+        state.status = PostStatus.LOADING;
+      });
+      builder.addCase(fetchPostsThunk.fulfilled, (state, action) => {
+        state.status = PostStatus.SUCCEEDED;
+        state.post = action.payload;
+      });
+      builder.addCase(fetchPostsThunk.rejected, (state, action) => {
+        state.status = PostStatus.FAILED;
+        state.error = action.payload != null ? action.payload : "Unknown error occurred.";
+      });
+      builder.addCase(fetchPostById.pending, (state) => {
+        state.status = PostStatus.LOADING;
+      });
+      builder.addCase(fetchPostById.fulfilled, (state) => {
+        state.status = PostStatus.SUCCEEDED;
 
-            state.post = {
-                userId: 0,
-                id: 0,
-                ...action.payload,
-            };
-        },
-    }
-})
+      });
+      builder.addCase(fetchPostById.rejected, (state, action) => {
+        state.status = PostStatus.FAILED;
+        state.error = action.payload != null ? action.payload : 'Unknown error occurred.';
+      });
+  },
+});
 
 export const { setPost } = postSlice.actions;
-
 export const selectPost = (state: RootState) => state.post
-
+export const selectPostById = (state: RootState, postId: number) =>
+  state.post.post.find((post) => post.id === postId);
 export default postSlice.reducer;
-

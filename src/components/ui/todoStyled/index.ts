@@ -2,49 +2,52 @@ import { Card, styled, Box, Container } from "@mui/material";
 
 
 export const TodoStyle = styled(Box)({
+    width: '90%',
     marginTop: '2em',
-    width: '40%',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
     padding: '2em',
     gap: '30px',
-    textAlign: 'justify'
 })
 
 export const TodoStyleButton = styled(Container)({
+    margin: '0',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    alignItems: 'end',
     gap: '30px',
     textAlign: 'justify',
-    justifyContent: 'flex-end',
+    justifyContent: "space-between",
 })
 
 export const PostStyle = styled(Card)({
-    width: '130vh',
+    width: '90%',
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: "space-between",
     padding: '1em',
     gap: '30px',
     marginBottom: '30px',
 })
 
 export const TodoTitle = styled(Box)<{ checked: boolean }>((props) => ({
-    width: '100vh',
+    width: '50%',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
+    textAlign: 'start',
+    alignItems: 'start',
     textDecoration: props.checked ? 'line-through' : 'none',
 }))
 
 export const TodoTitleEdit = styled(Box)({
-    width: '100vh',
+    margin: '0',
+    width: '50%',
     display: 'flex',
     flexDirection: 'row',
-    alignItems: 'center',
-    marginBottom: '30px',
+    textAlign: 'start',
+    alignItems: 'start',
+
 })
 
 

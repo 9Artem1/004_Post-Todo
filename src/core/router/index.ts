@@ -16,7 +16,7 @@ export const router = createBrowserRouter([
       Component: PostsPage
     },
     {
-      path: "PostDetailsPage",
+      path: "PostDetailsPage/:id",
       Component: PostDetailsPage
     },
     {
@@ -32,7 +32,7 @@ export const router = createBrowserRouter([
       Component: TodoPage
     },
     {
-      path: "TaskDetails",
+      path: "TodoPage/:id",
       Component: TaskDetails
     },
   
