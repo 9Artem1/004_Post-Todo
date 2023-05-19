@@ -43,7 +43,6 @@ export const FormNewTask: React.FC<FormNewTaskProps> = ({
               addTask({
                 text: textNewTask,
                 completed: false,
-                id: ""
               })
             );
             setTextNewTask('');
@@ -53,7 +52,6 @@ export const FormNewTask: React.FC<FormNewTaskProps> = ({
         dispatch(addTask({
           text: textNewTask,
           completed: false,
-          id: ""
         }));
         setTextNewTask('');
       }}

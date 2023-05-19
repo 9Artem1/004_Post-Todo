@@ -3,10 +3,9 @@ import { Wrapper } from "../../components/ui/wrapper";
 import { useSelector } from "react-redux";
 import { selectTask } from "../../core/store/taskSlice";
 import { TaskDetailsComponent } from "../../components/simple/TaskDetailsComponent";
-import { NavLink, useParams, useSearchParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Button, Typography } from "@mui/material";
 import { PostStyle } from "../../components/ui/todoStyled";
-import { useLocation } from "react-router-dom";
 
   const TaskDetails: React.FC = () => {
     const tasks = useSelector(selectTask);

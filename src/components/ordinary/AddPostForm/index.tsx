@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { Button, Card, TextField, Typography, styled } from '@mui/material'
 import { useForm } from "react-hook-form";
-import { setPost } from '../../../core/store/postSlice';
+import {addNewPost} from '../../../core/store/postSlice';
 import { Form, useNavigate } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../../core/store';
 
 
 const CommentStyle = styled(Card)({
@@ -18,7 +18,7 @@ const CommentStyle = styled(Card)({
 
 
 export const FormAddPost = () => {
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
     const navigate = useNavigate();
 
     const {
@@ -38,7 +38,7 @@ export const FormAddPost = () => {
 
         <Form
             onSubmit={handleSubmit((data) => {
-                dispatch(setPost({ title: data.PostTitle, body: data.PostMessage }));
+                dispatch(addNewPost({ title: data.PostTitle, body: data.PostMessage, userId: 1 }));
                 navigate('/')
             })}
         >

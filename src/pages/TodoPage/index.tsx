@@ -5,8 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { TaskComponent } from "../../components/simple/SetTaskComponent";
 import { TodoStyle, PostStyle } from "../../components/ui/todoStyled";
 import { FormNewTask } from "../../components/simple/NewTaskComponent";
-import { Task } from '../../core/types/task';
-import { v4 as uuidv4 } from 'uuid';
+
 
 
 const TodoPage: React.FC = () => {

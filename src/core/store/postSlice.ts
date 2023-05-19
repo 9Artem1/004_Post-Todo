@@ -1,4 +1,4 @@
-import { SerializedError, createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { RootState } from '.'
 import { Post } from '../types/post';
 
@@ -54,6 +54,28 @@ export const fetchPostById = createAsyncThunk<Post, number, { rejectValue: strin
     }
   }
 );
+
+export const addNewPost = createAsyncThunk<Post, Omit<Post, 'id'>, { rejectValue: string }>(
+  'post/addNewPost', async (post, {rejectWithValue}) => {
+    try {
+      const response = await fetch("https://jsonplaceholder.typicode.com/posts", {
+        method: 'POST',
+        headers: {
+          'content-type' : 'application/json'
+        },
+        body: JSON.stringify(post)
+      });
+      if (!response.ok) {
+        throw new Error('Server Error!');
+      }
+      const data = await response.json();
+      console.log(data)
+      return data; 
+    } catch (error:any) {
+      return rejectWithValue(error.message)
+    }
+  }
+)
 
 const postSlice = createSlice({
     name: "createPost",
