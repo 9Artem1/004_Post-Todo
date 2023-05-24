@@ -29,7 +29,7 @@ const PostDetailsPage = () => {
   }, []);
 
   return (
-    <Wrapper>
+    <Wrapper sx={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
       {post ? (
         <PostDetailsComponent key={post.id} postId={post.id} />
       ) : (

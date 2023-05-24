@@ -5,13 +5,16 @@ import CreatePost from "../../pages/AddPostPage";
 import { Navbar } from "../../components/Navbar";
 import TodoPage from "../../pages/TodoPage";
 import TaskDetails from "../../pages/TaskDetailsPage";
+import CounterPage from "../../pages/ CounterPage";
+import AlbumsPage from "../../pages/AlbumsPage";
+import PhotosPage from "../../pages/PhotosPage";
 
 export const router = createBrowserRouter([
   { 
     Component: Navbar,
     children: [ 
     {
-      path: '',
+      path: '/',
       Component: PostsPage
     },
     {
@@ -23,6 +26,10 @@ export const router = createBrowserRouter([
       Component: CreatePost
     },
     {
+      path: "CounterPage",
+      Component: CounterPage
+    },
+    {
       path: "TodoPage",
       Component: TodoPage
     },
@@ -30,10 +37,16 @@ export const router = createBrowserRouter([
       path: "TodoPage/:id",
       Component: TaskDetails
     },
-  
+    {
+      path: "AlbumsPage",
+      Component: AlbumsPage
+    },
+    {
+      path: "PhotosPage/:id",
+      Component: PhotosPage
+    }
   ]
   }
-
 ]);
 
 

@@ -1,24 +1,30 @@
 import { FC } from "react"
 import { Comment } from "../../../core/types/comment"
-import { Card, Typography, styled } from "@mui/material"
+import { Card, Grid, Typography, styled } from "@mui/material"
 
 
 const CommentsStyle = styled(Card)({
-    marginTop: '30px',
-    width: '100vh',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'start',
-    padding: '2em',
-    gap: '30px'
-})
+  width: '100%',
+  display: 'flex',
+  flexDirection: 'column',
+  alignItems: 'center',
+  padding: '2em',
+  gap: '30px',
 
+  '@media (min-width: 768px)': {
+    width: '60%',
+    margin: '0 auto',
+    alignItems: 'flex-start',
+  },
+});
 
 
 
 export const CommentComponent: FC<{comment: Comment}> = ({comment}) => {
-    return <CommentsStyle>
-    <Typography variant="h4" >{comment.name}</Typography>
+    return <Grid sx={{ width: '70%', padding: 0, margin: "1rem", display: 'flex', justifyContent: 'center' }} container spacing={2}>
+    <CommentsStyle>
+    <Typography variant="h5" >{comment.name}</Typography>
     <Typography>{comment.body}</Typography>
   </CommentsStyle>
+    </Grid>
 }

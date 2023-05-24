@@ -2,48 +2,99 @@ import React from "react";
 import GlobalStyles from '@mui/material/GlobalStyles';
 import { RouterProvider } from "react-router";
 import { router } from "./core/router";
-import { ThemeProvider } from "@mui/material";
+import { IconButton, ThemeProvider, useTheme } from "@mui/material";
 import { createTheme } from "@mui/material";
-import { ThemeOptions } from '@mui/material';
 import store from "./core/store";
-import { Provider } from 'react-redux'
-
-export const themeOptions: ThemeOptions = createTheme({
-  palette: {
-    mode: "light",
-    primary: {
-      main: "#00ADB5",
-      contrastText: "#eeeeee",
-    },
-    secondary: {
-      main: "#0F4C75",
-    },
-    background: {
-      paper: "#e6ecf0",
-    },
-    text: {
-      primary: "#52616B",
-      secondary: "#6d737d",
-    },
-  },
-});
+import { Provider } from 'react-redux';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { Wrapper } from "./components/ui/wrapper";
 
 
-const App = () => {
-  
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+
+export function DarkModeToogle() {
+  const theme = useTheme();
+  const colorMode = React.useContext(ColorModeContext);
   return (
-    <Provider store={store}>
-    <ThemeProvider theme={themeOptions}>
-      <GlobalStyles styles={{body: {
-        backgroundColor: themeOptions.palette?.background?.default
-      }}} />
-
-      <RouterProvider router={router} />
-    </ThemeProvider>
-    </Provider>
-);
+<>
+{/* {theme.palette.mode} тема */}
+      <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
+</> 
+  );
 }
 
+export default function ToggleColorMode() {
+  const [mode, setMode] = React.useState<'light' | 'dark'>('light');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
 
-export default App;
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+          ...(mode === 'light'
+            ? {
+                // palette values for light mode
+                primary: {
+                  main: "#00ADB5",
+                  contrastText: "#eeeeee",
+                },
+                secondary: {
+                  main: "#0F4C75",
+                },
+                background: {
+                  paper: "#e6ecf0",
+                },
+                text: {
+                  primary: "#52616B",
+                  secondary: "#6d737d",
+                },
+              }
+            : {
+                // palette values for dark mode
+                primary: {
+                  main: "#00ADB5",
+                  contrastText: "#eeeeee",
+                },
+                secondary: {
+                  main: "#0F4C75",
+                },
+                background: {
+                  paper: "#222831",
+                  default: "#0E131A",
+                },
+                text: {
+                  primary: "#eeeeee",
+                  secondary: "#eeeeee",
+                },
+              }),
+        },
+      }),
+    [mode],
+  );
+
+  return (
+    <Provider store={store}>
+      <ColorModeContext.Provider value={colorMode}>
+        <ThemeProvider theme={theme}>
+        <GlobalStyles styles={{body: {
+        backgroundColor: theme.palette?.background?.default,
+      }}} />
+      <RouterProvider router={router} />
+        </ThemeProvider>
+      </ColorModeContext.Provider>
+    </Provider>
+  );
+}
+
 

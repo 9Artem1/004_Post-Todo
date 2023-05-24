@@ -1,72 +1,107 @@
-
-
 import * as React from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import Drawer from '@mui/material/Drawer';
 import { Outlet } from 'react-router-dom';
 import { NavLink } from 'react-router-dom';
 import { styled } from '@mui/material';
+import { DarkModeToogle } from './../App';
 
-
-
-const StyledLink = styled(NavLink)(({theme}) => ({
+const StyledLink = styled(NavLink)(({ theme }) => ({
   textDecoration: 'none',
   color: theme.palette.primary.contrastText
-}))
+}));
 
-export const Navbar: React.FC = () => {
+export const Navbar = () => {
+  const [open, setOpen] = React.useState(false);
+
+  const handleDrawerOpen = () => {
+    setOpen(true);
+  };
+
+  const handleDrawerClose = () => {
+    setOpen(false);
+  };
+
   const pages = [
-    {to: "/", text: "Список постов"},
-    {to: "PostDetailsPage", text: "Случайный Пост"},
-    {to: "CreatePost", text: "Добавить новый пост"},
-    {to: "TodoPage", text: "ToDo Лист"}
+    { to: "/", text: "Список постов" },
+    { to: "CreatePost", text: "Добавить новый пост" },
+    { to: "TodoPage", text: "ToDo" },
+    { to: "AlbumsPage", text: "Фотоальбом" },
+    { to: "CounterPage", text: "Счетчик" }
   ];
 
   return (
     <>
       <AppBar position="static">
-        <Container maxWidth="xl">
-          <Toolbar disableGutters>
-            <Typography
-              variant="h5"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                mr: 2,
-                display: { xs: 'none', md: 'flex' },
-                fontFamily: 'monospace',
-                fontWeight: 700,
-                letterSpacing: '.3rem',
-                color: 'inherit',
-                textDecoration: 'none',
-              }}
-            >
-              Генератор постов
-            </Typography>
+        <Toolbar disableGutters sx={{ display: 'flex', justifyContent: 'space-around', width: '100%', maxWidth: '100%' }}>
+          <IconButton
+            edge="end"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2, display: { md: 'none' } }}
+            onClick={handleDrawerOpen}
+          >
+            <MenuIcon />
+          </IconButton>
 
-            <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end'  }}>
-              {pages.map(({to, text}) => (
-                <Button
-                  key={to}
-                  sx={{ my: 6, color: 'white', display: 'block', marginLeft: '2em', textDecoration: 'none'  }}
-                >
-                  <StyledLink 
-                  to={to}>{text}
-                  </StyledLink>
-                </Button>
-              ))}
-            </Box>
+          <Typography
+            variant="h5"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              mr: 2,
+              display: { xs: 'flex', md: 'flex' },
+              fontFamily: 'monospace',
+              fontWeight: 700,
+              letterSpacing: '.3rem',
+              color: 'inherit',
+              textDecoration: 'none',
+            }}
+          >
+            Генератор постов
+          </Typography>
 
-          </Toolbar>
-        </Container>
+          <Box sx={{ display: { xs: 'none', md: 'flex' }, justifyContent: 'flex-end' }}>
+            {pages.map(({ to, text }) => (
+              <Button
+                key={to}
+                sx={{ my: 6, color: 'black', display: 'block', marginLeft: '2em', textDecoration: 'none' }}
+              >
+                <StyledLink to={to}>{text}</StyledLink>
+              </Button>
+            ))}
+            <DarkModeToogle />
+          </Box>
+
+        </Toolbar>
       </AppBar>
+      <Drawer
+        variant="temporary"
+        open={open}
+        onClose={handleDrawerClose}
+        ModalProps={{ keepMounted: true }}
+      >
+        <Box
+          sx={{ width: '250px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-start', p: 2}}
+          role="presentation"
+          onClick={handleDrawerClose}
+        >
+        <DarkModeToogle />
+          {pages.map(({ to, text }) => (
+            <Button key={to} style={{ margin: '1em 0' }} >
+              <StyledLink to={to} sx={{color: '#00ADB5'}}>{text}</StyledLink>
+            </Button>
+          ))}
+        </Box>
+      </Drawer>
       <Outlet />
     </>
   );
-}
-
+};

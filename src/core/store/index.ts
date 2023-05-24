@@ -1,16 +1,20 @@
-import { configureStore } from '@reduxjs/toolkit'
-import counterSlice from './counterSlice'
-import postSlice from './postSlice'
-import { useDispatch } from 'react-redux'
-import commentSlice from './commentSlice'
-import taskSlice from './taskSlice'
+import { configureStore } from '@reduxjs/toolkit';
+import counterSlice from './counterSlice';
+import postSlice from './postSlice';
+import { useDispatch } from 'react-redux';
+import commentSlice from './commentSlice';
+import taskSlice from './taskSlice';
+import albumsSlice from './albumsSlice';
+import photosSlice from './photosSlice';
 
  const store = configureStore({
   reducer: {
     counter: counterSlice,
     post: postSlice,
     comment: commentSlice,
-    task: taskSlice
+    task: taskSlice,
+    albums: albumsSlice,
+    photos: photosSlice
   },
 })
 

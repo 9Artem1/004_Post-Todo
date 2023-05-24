@@ -1,14 +1,8 @@
-import { Box, styled } from "@mui/material";
-
-
-
+ import { Box, styled } from "@mui/material";
 
 export const Wrapper = styled(Box)({
-    width: '90%',
-    display: 'flex',
-    justifyContent: 'flexStart',
-    flexDirection: 'column',
-    alignItems: 'center',
-    padding: '2em 0'
+    margin: 0,
+    padding: 0,
+    width: '100%',
 });
 

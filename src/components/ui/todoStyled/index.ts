@@ -15,7 +15,6 @@ export const TodoStyleButton = styled(Container)({
     display: 'flex',
     flexDirection: 'row',
     alignItems: 'end',
-    gap: '30px',
     textAlign: 'justify',
     justifyContent: "space-between",
 })
@@ -26,7 +25,6 @@ export const PostStyle = styled(Card)({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: "space-between",
-    padding: '1em',
     gap: '30px',
     marginBottom: '30px',
 })

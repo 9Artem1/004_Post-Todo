@@ -13,7 +13,7 @@ import { PostStyle } from "../../components/ui/todoStyled";
     const task = tasks.find((task) => task.id === taskId);
   
     return (
-      <Wrapper>
+      <Wrapper sx={{display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
         {task ? (
           <>
             <PostStyle>

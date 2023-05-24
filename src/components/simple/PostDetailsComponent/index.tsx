@@ -1,19 +1,20 @@
 import { FC } from 'react';
-import { Button, Card, Stack, Typography, styled } from '@mui/material';
+import { Box, Button, Card, Container, Grid, Stack, Typography, styled } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { selectPostById } from '../../../core/store/postSlice';
 import { RootState } from '../../../core/store';
 import AddCommentForm from '../../ordinary/AddCommentForm';
-import { Wrapper } from '../../ui/wrapper';
+
 
 const PostStyle = styled(Card)({
-  width: '100vh',
+  width: '86%',
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'start',
+  alignItems: 'center',
   padding: '2em',
   gap: '30px',
+  margin: '1em'
 });
 
 export const PostDetailsComponent: FC<{ postId: number }> = ({ postId  }) => {
@@ -24,21 +25,25 @@ export const PostDetailsComponent: FC<{ postId: number }> = ({ postId  }) => {
   }
 
   return (
-   <Wrapper>
+
+    <>
+    <Grid sx={{ width: '90%', padding: 0, margin: 0, display: 'flex', justifyContent: 'center' }} container spacing={2}>
     <PostStyle>
-      <Stack spacing={4} padding={3}>
-        <Typography variant="h2" color="primary">
+        <Typography variant="h3" color="primary">
           {post.title}
         </Typography>
         <Typography variant="body1">{post.body}</Typography>
         <NavLink to="/">
           <Button variant="contained">К списку постов</Button>
         </NavLink>
-      </Stack>
-    </PostStyle>
-    <AddCommentForm></AddCommentForm>
-    </Wrapper>
 
+    </PostStyle>
+    <Box  sx={{ width: '90%', display: 'flex', justifyContent: 'center'}}>
+    <AddCommentForm/>
+    </Box>
+
+    </Grid>
+    </>
 
 );
 };

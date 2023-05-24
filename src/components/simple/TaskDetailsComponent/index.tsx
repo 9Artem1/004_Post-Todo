@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { Button, Checkbox, TextField } from "@mui/material";
+import { Button, Checkbox, Grid, TextField } from "@mui/material";
 import { completeTask, editTask } from "../../../core/store/taskSlice";
 import { useDispatch } from "react-redux";
 import { TodoStyle, TodoStyleButton, TodoTitle, TodoTitleEdit } from "../../ui/todoStyled";
@@ -35,7 +35,8 @@ export const TaskDetailsComponent: FC<{ id: string, task: Task }> = ({ id, task 
   
     return (
       <>
-            <TodoStyle>
+      <Grid sx={{ width: '90%', padding: 0, margin: 0, display: 'flex', justifyContent: 'center' }} container spacing={2}>
+      <TodoStyle>
           <Checkbox
             checked={task.completed}
             size="medium"
@@ -83,6 +84,7 @@ export const TaskDetailsComponent: FC<{ id: string, task: Task }> = ({ id, task 
             {editingInput === id ? "Сохранить изменения" : "Редактировать задачу"}
           </Button>
         </TodoStyleButton>
+      </Grid>
       </>
     );
   };

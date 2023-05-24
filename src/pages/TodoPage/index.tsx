@@ -30,7 +30,7 @@ const TodoPage: React.FC = () => {
     }, [tasks]);
 
     return (
-        <Wrapper>
+        <Wrapper sx={{display: 'flex', flexDirection: 'column', alignItems: 'center', marginTop: '3em' }}>
             {tasks.map((task) => (
                 <PostStyle key={task.id}>
                     <TaskComponent id={task.id} task={task} />

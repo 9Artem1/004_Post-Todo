@@ -1,5 +1,5 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { RootState } from '.'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { RootState } from '.';
 import { Post } from '../types/post';
 
 
